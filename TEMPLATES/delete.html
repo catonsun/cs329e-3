@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<h1>Delete a chore</h1>
+<form action="/delete" method="post" enctype="multipart/form-data">
+    Name of chore:<br>
+    <input type="text" name="chore">
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

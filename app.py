@@ -1,0 +1,92 @@
+from flask import Flask, render_template, request, redirect, url_for
+import os
+import csv
+
+
+app = Flask(__name__)
+
+
+usernames = ["mom", "dad"]
+passwords = ["asdf", "1234"]
+user = False
+
+
+@app.route("/")
+def index():
+    if not user:
+        return render_template("home.html")
+    else:
+        return render_template("home-user.html")
+
+
+@app.route("/login", methods=['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        username = request.form["username"]
+        password = request.form["password"]
+        verify(username, password)
+        return redirect(url_for('index'))
+    return render_template("login.html")
+
+
+def verify(username, password):
+    try:
+        ind = usernames.index(username)
+        if passwords[ind] == password:
+            global user
+            user = True
+    except ValueError:
+        print("Username not found")
+
+
+@app.route("/upload", methods=['POST', 'GET'])
+def upload():
+    if request.method == 'POST':
+        file = request.files['file']
+        filename = file.filename
+        file.save(os.path.join('CHORES', filename))
+        print(request.form["chore"])
+        print(request.form["description"])
+        chore = request.form["chore"]
+        description = request.form["description"]
+        save(chore, description, filename)
+        return redirect(url_for('index'))
+    return render_template("upload.html")
+
+
+def save(chore, description, picture):
+    row = [str(chore), str(description), str(picture)]
+    with open('DATABASE.csv', 'a') as csv_file:
+        writer = csv.writer(csv_file)
+        writer.writerow(row)
+
+
+@app.route("/delete", methods=['POST', 'GET'])
+def delete():
+    if request.method == 'POST':
+        chore = request.form["chore"]
+        print(chore)
+        holder = []
+        with open('DATABASE.csv', 'r') as inp:
+            for row in csv.reader(inp):
+                if not row:
+                    continue
+                elif row[0] != chore:
+                    holder.append(row)
+                else:
+                    picture = row[2]
+                    if os.path.exists("CHORES/" + picture):
+                        os.remove("CHORES/" + picture)
+                    else:
+                        print("The file does not exist")
+        with open('DATABASE.csv', 'w') as output:
+            writer = csv.writer(output)
+            for row in holder:
+                writer.writerow(row)
+
+        return redirect(url_for('index'))
+    return render_template("delete.html")
+
+
+if __name__ == '__main__':
+    app.run()
