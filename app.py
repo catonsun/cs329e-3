@@ -35,8 +35,9 @@ def verify(username, password):
         if passwords[ind] == password:
             global user
             user = True
+            return "user is verified"
     except ValueError:
-        print("Username not found")
+        return "Username not found"
 
 
 @app.route("/upload", methods=['POST', 'GET'])
