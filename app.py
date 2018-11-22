@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import csv
+import codecs
 
 
 app = Flask(__name__)
@@ -9,6 +10,24 @@ app = Flask(__name__)
 usernames = ["mom", "dad"]
 passwords = ["asdf", "1234"]
 user = False
+
+# This opens the DATABASE.csv file and records the data
+def makeList():
+    dataList = ""
+    header = 0
+    # with open('Questions.csv', 'r') as csvfile:
+    with codecs.open('DATABASE.csv', "r", encoding='utf-8', errors='ignore') as csvfile:
+        csvreader = csv.reader(csvfile)
+        for row in csvreader:
+            dataList += str(row) + '\n'
+    csvfile.close()
+    return dataList
+
+
+@app.route("/listOutput", methods=['POST' , 'GET'])
+def listOutput():
+    output=makeList()
+    return render_template("choreview.html", name = output)
 
 
 @app.route("/")
@@ -102,10 +121,11 @@ def checklist():
         choreList.append(checkChore)
     return render_template("checklist.html")
 
+
 @app.route("/choreview", methods=['POST', 'GET'])
 def choreview():
-
     return render_template("choreview.html")
+
 
 if __name__ == '__main__':
     app.run()
