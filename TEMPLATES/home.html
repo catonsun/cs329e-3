@@ -3,9 +3,9 @@
 {% block body %}
     <style>
         .button {
-            background-color: lightblue;
+            background-color: black;
             border: outset;
-            color: white;
+            color: lightgreen;
             padding: 15px 30px;
             text-align: center;
             font-size: 12px;
@@ -17,11 +17,9 @@
     </style>
     <center><h1>Welcome to Chore Tracker!</h1>
         <br> <text>Please use this website to create and track chores for your kids!</text> <br> <br>
-        <form action="/login">
-            <input class="button" type="submit" value="Click here to login" />
-        </form>
+        <button class = "button" onclick="window.location.href='/login'"> Click Here to Login </button>
         <br>
-        <a href="/upload">Click Here to Add a Chore</a>
-        <br>
-        <a href="/checklist">Click Here to Access the Checklist</a></center>
+        <a href="/upload">Click Here to Add a Chore</a></center>
+    <body style="background-color:lightgreen">
+    </body>
 {% endblock %}
