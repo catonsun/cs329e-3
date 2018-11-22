@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-
+<center>
 <h1>Upload a picture of your chore!</h1>
 <form action="/upload" method="post" enctype="multipart/form-data">
     <p>Add a name for your chore!</p>
@@ -13,4 +13,7 @@
     <input type="submit" value="Upload" accept=".jpg,.JPG,.png,.PNG,.gif,.GIF,.jpeg,.JPEG,.pdf,.PDF">
     <br> <br>
 </form>
+<body style="background-color:lightgreen">
+</body>
+</center>
 {% endblock %}
