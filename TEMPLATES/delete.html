@@ -1,11 +1,14 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-
-<h1>Delete a chore</h1>
+<center>
+<h1>Delete a Chore</h1>
 <form action="/delete" method="post" enctype="multipart/form-data">
     Name of chore:<br>
     <input type="text" name="chore">
     <input type="submit" value="Submit">
 </form>
+</center>
+<body style="background-color:lightgreen">
+</body>
 {% endblock %}
