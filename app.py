@@ -88,6 +88,10 @@ def delete():
         return redirect(url_for('index'))
     return render_template("delete.html")
 
+@app.route("/checklist")
+def checklist():
+    return render_template("checklist.html")
+
 
 if __name__ == '__main__':
     app.run()
