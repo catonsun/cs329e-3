@@ -29,6 +29,11 @@ def login():
     return render_template("login.html")
 
 
+@app.route("/logout", methods=['POST', 'GET'])
+def logout():
+    return render_template("home.html")
+
+
 def verify(username, password):
     try:
         ind = usernames.index(username)
