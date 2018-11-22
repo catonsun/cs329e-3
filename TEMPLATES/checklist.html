@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1>Checklist</h1>
+<form action="/checklist" method="post" enctype="multipart/form-data">
+    Add to Chore Checklist:
+    <input type="text" name="Chore" required>
+    <br>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
