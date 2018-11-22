@@ -97,6 +97,10 @@ def checklist():
         choreList.append(checkChore)
     return render_template("checklist.html")
 
+@app.route("/choreview", methods=['POST', 'GET'])
+def choreview():
+
+    return render_template("choreview.html")
 
 if __name__ == '__main__':
     app.run()

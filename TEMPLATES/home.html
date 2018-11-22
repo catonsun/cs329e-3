@@ -1,26 +1,16 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <style>
-        .button {
-            background-color: black;
-            border: outset;
-            color: lightgreen;
-            padding: 15px 30px;
-            text-align: center;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        body {
-            background-image: url(chores.jpg);
-        }
-    </style>
+
     <center><h1>Welcome to Chore Tracker!</h1>
-        <br> <text>Please use this website to create and track chores for your kids!</text> <br>
-        <text>If you are a parent, please log in. If you are a kid, please add a chore</text> <br> <br>
-        <button class = "button" onclick="window.location.href='/login'"> Click Here to Login </button>
-        <br>
-        <a href="/upload">Click Here to Add a Chore</a></center>
-    <body style="background-color:lightgreen">
-    </body>
+
+        <div class = "jumbotron">
+        <text>Please use this website to create and track chores for your kids!</text> <br>
+        <text> Parent: login to add new chores and to view chores that you child has completed<br>
+            Children: go to chore upload to upload completed chores
+        </text>
+        </div>
+        </center>
+
+
 {% endblock %}
