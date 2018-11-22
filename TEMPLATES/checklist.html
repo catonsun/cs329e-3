@@ -2,5 +2,10 @@
 
 {% block body %}
     <h1>Checklist</h1>
-        <br> <text>Please use this website to create and track chores for your kids!</text> <br> <br>
+<form action="/checklist" method="post" enctype="multipart/form-data">
+    Add to Chore Checklist:
+    <input type="text" name="Chore" required>
+    <br>
+    <input type="submit" value="Submit">
+</form>
 {% endblock %}
