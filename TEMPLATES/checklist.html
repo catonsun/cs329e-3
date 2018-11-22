@@ -1,11 +1,59 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <h1>Checklist</h1>
-<form action="/checklist" method="post" enctype="multipart/form-data">
+
+<script>
+    if (localStorage.getItem("chores") === null) {
+        console.log("first time");
+        var chores = ["hello"];
+        localStorage.setItem("chores", chores);
+        //console.log(JSON.parse(localStorage.getItem("chores")));
+        console.log(localStorage.getItem("chores"));
+        console.dir(chores);
+    }
+    else {
+        console.log("creating list");
+        var list = localStorage.getItem("chores");
+        if (list) {
+            var newlist = JSON.parse(list);
+            for (var i = 0; i < list.length; i++) {
+                var textnode = document.createTextNode(newlist[i]);
+                node.appendChild(textnode);
+                document.getElementById("cl").appendChild(node);
+        }
+        }
+    }
+
+    function addToList() {
+        var node = document.createElement('LI');
+        var value = document.getElementById("chore").value;
+        if (value != "") {
+            var textnode = document.createTextNode(value);
+            node.appendChild(textnode);
+            document.getElementById("cl").appendChild(node);
+            var clist = localStorage.getItem("chores");
+            if (clist) {
+                console.log("got list. adding element");
+                clist = JSON.parse(clist);
+                clist.put(value);
+                console.log();
+            }
+
+        }
+    }
+</script>
+
+<h1>Checklist</h1>
+<!--<form action="/checklist" method="post" enctype="multipart/form-data">
     Add to Chore Checklist:
     <input type="text" name="Chore" required>
     <br>
     <input type="submit" value="Submit">
-</form>
+</form>-->
+<input type="text" name="chore" id="chore" required>
+<br>
+<button onclick="addToList()">Click to add chore to list</button>
+<ul id="cl">
+
+</ul>
 {% endblock %}

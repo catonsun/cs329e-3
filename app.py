@@ -88,6 +88,7 @@ def delete():
         return redirect(url_for('index'))
     return render_template("delete.html")
 
+
 @app.route("/checklist", methods=['POST', 'GET'])
 def checklist():
     choreList = []
