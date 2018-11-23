@@ -1,9 +1,15 @@
 import unittest
-from app import verify
+from app import verify, makeList, checklist
+from flask import Flask, render_template, request, redirect, url_for
+import os
 import csv
-from unittest.mock import patch
-
+import codecs
 from contextlib import contextmanager
+app = Flask(__name__)
+usernames = ["mom", "dad"]
+passwords = ["asdf", "1234"]
+user = False
+
 
 @contextmanager
 def mockRawInput(mock):
@@ -18,6 +24,20 @@ class MyTest(unittest.TestCase):
 
     def test2(self):
         self.assertEqual(verify("wrong","wrong"), "Username not found")
+
+    def test3(self):
+        self.assertEqual(makeList("testEmpty.csv"), "")
+
+    def test4(self):
+        filledList = "['test', 'test', 'test']\n"
+        self.assertEqual(makeList("testFilled.csv"), filledList)
+
+
+
+
+    # @app.route("/checklist", methods=['POST', 'GET'])
+    # def test3(self):
+    #     self.assertEqual(checklist(),render_template("checklist.html"))
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(MyTest)

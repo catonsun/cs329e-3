@@ -5,8 +5,6 @@ import codecs
 
 
 app = Flask(__name__)
-
-
 usernames = ["mom", "dad"]
 passwords = ["asdf", "1234"]
 user = False
@@ -68,6 +66,7 @@ def save(chore, description, picture):
     with open('DATABASE.csv', 'a') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(row)
+    return
 
 
 @app.route("/delete", methods=['POST', 'GET'])
