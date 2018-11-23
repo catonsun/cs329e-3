@@ -9,9 +9,9 @@
     <p id="chore" hidden>{{chore}}</p>
     <table class="table" id="area">
         <tr>
-            <th>Chore</th>
-            <th>Description</th>
-            <th>Picture</th>
+            <th scope="col">Chore</th>
+            <th scope="col">Description</th>
+            <th scope="col">Picture</th>
         </tr>
     </table>
     </center>
@@ -36,7 +36,8 @@
 
         for(var i = 0; i < chores.length; i++) {
             var tr = document.createElement("TR");
-        var td1 = document.createElement("TD");
+        var td1 = document.createElement("TH");
+        td1.setAttribute("scope", "row");
         var td2 = document.createElement("TD");
         var td3 = document.createElement("TD");
         var c = document.createTextNode(chores[i][0]);
