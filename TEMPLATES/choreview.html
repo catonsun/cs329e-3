@@ -1,11 +1,62 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+
     <center>
     <h1>View Completed Chores Here</h1>
-    <a href="/listOutput">Click here to view all completed chores!</a>
+    <!--<a href="/listOutput">Click here to view all completed chores!</a>-->
     <br>
-    {{name}}
+    <p id="chore" hidden>{{chore}}</p>
+    <table style="width:100%" border="2px" id="area">
+        <tr>
+            <th>Chore</th>
+            <th>Description</th>
+            <th>Picture</th>
+        </tr>
+    </table>
     </center>
+
+    <script>
+        var x = document.getElementById("chore").innerHTML;
+        var y = x.split('`');
+        var chores = [];
+        for(var i = 0; i < y.length; i++) {
+            if(y[i] != "[]" && y[i] != "") {
+                chores.push(y[i].substring(1, y[i].length - 1));
+            }
+        }
+        for(var i = 0; i < chores.length; i++) {
+            chores[i] = chores[i].split(", ");
+            for(var j = 0; j < chores[i].length; j++) {
+                chores[i][j] = chores[i][j].substring(1, chores[i][j].length - 1);
+            }
+        }
+
+        console.log(chores);
+
+        for(var i = 0; i < chores.length; i++) {
+            var tr = document.createElement("TR");
+        var td1 = document.createElement("TD");
+        var td2 = document.createElement("TD");
+        var td3 = document.createElement("TD");
+        var c = document.createTextNode(chores[i][0]);
+        var d = document.createTextNode(chores[i][1]);
+        var p = document.createElement("IMG");
+        p.setAttribute("src", "static/" + chores[i][2]);
+        p.setAttribute("width", "500");
+        p.setAttribute("height", "300");
+
+        td1.appendChild(c);
+        td2.appendChild(d);
+        td3.appendChild(p);
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+
+        document.getElementById("area").appendChild(tr);
+        }
+
+    </script>
 
 {% endblock %}

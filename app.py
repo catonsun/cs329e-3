@@ -11,24 +11,6 @@ usernames = ["mom", "dad"]
 passwords = ["asdf", "1234"]
 user = False
 
-# This opens the DATABASE.csv file and records the data
-def makeList():
-    dataList = ""
-    header = 0
-    # with open('Questions.csv', 'r') as csvfile:
-    with codecs.open('DATABASE.csv', "r", encoding='utf-8', errors='ignore') as csvfile:
-        csvreader = csv.reader(csvfile)
-        for row in csvreader:
-            dataList += str(row) + '\n'
-    csvfile.close()
-    return dataList
-
-
-@app.route("/listOutput", methods=['POST' , 'GET'])
-def listOutput():
-    output=makeList()
-    return render_template("choreview.html", name = output)
-
 
 @app.route("/")
 def index():
@@ -50,6 +32,8 @@ def login():
 
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():
+    global user
+    user = False
     return render_template("home.html")
 
 
@@ -69,7 +53,7 @@ def upload():
     if request.method == 'POST':
         file = request.files['file']
         filename = file.filename
-        file.save(os.path.join('CHORES', filename))
+        file.save(os.path.join('static', filename))
         print(request.form["chore"])
         print(request.form["description"])
         chore = request.form["chore"]
@@ -100,8 +84,8 @@ def delete():
                     holder.append(row)
                 else:
                     picture = row[2]
-                    if os.path.exists("CHORES/" + picture):
-                        os.remove("CHORES/" + picture)
+                    if os.path.exists("static/" + picture):
+                        os.remove("static/" + picture)
                     else:
                         print("The file does not exist")
         with open('DATABASE.csv', 'w') as output:
@@ -124,7 +108,26 @@ def checklist():
 
 @app.route("/choreview", methods=['POST', 'GET'])
 def choreview():
-    return render_template("choreview.html")
+    output = makeList()
+    return render_template("choreview.html", chore=output)
+
+
+# This opens the DATABASE.csv file and records the data
+def makeList():
+    dataList = ""
+    # with open('Questions.csv', 'r') as csvfile:
+    with codecs.open('DATABASE.csv', "r", encoding='utf-8', errors='ignore') as csvfile:
+        csvreader = csv.reader(csvfile)
+        for row in csvreader:
+            dataList += str(row) + '`'
+    csvfile.close()
+    return dataList
+
+
+# @app.route("/listOutput", methods=['POST', 'GET'])
+# def listOutput():
+#     output=makeList()
+#     return render_template("listview.html", name = output)
 
 
 if __name__ == '__main__':
