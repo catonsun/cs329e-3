@@ -5,28 +5,28 @@ import codecs
 
 
 app = Flask(__name__)
-
-
 usernames = ["mom", "dad"]
 passwords = ["asdf", "1234"]
 user = False
 
 # This opens the DATABASE.csv file and records the data
-def makeList():
+def makeList(csvFile):
+    # 'DATABASE.csv'
     dataList = ""
     header = 0
     # with open('Questions.csv', 'r') as csvfile:
-    with codecs.open('DATABASE.csv', "r", encoding='utf-8', errors='ignore') as csvfile:
+    with codecs.open( csvFile, "r", encoding='utf-8', errors='ignore') as csvfile:
         csvreader = csv.reader(csvfile)
         for row in csvreader:
             dataList += str(row) + '\n'
     csvfile.close()
+
     return dataList
 
 
 @app.route("/listOutput", methods=['POST' , 'GET'])
 def listOutput():
-    output=makeList()
+    output=makeList('DATABASE.csv')
     return render_template("choreview.html", name = output)
 
 
@@ -84,6 +84,7 @@ def save(chore, description, picture):
     with open('DATABASE.csv', 'a') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(row)
+    return
 
 
 @app.route("/delete", methods=['POST', 'GET'])
