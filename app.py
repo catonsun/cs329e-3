@@ -56,17 +56,17 @@ def upload():
         print(request.form["description"])
         chore = request.form["chore"]
         description = request.form["description"]
-        save(chore, description, filename)
+        save(chore, description, filename, 'DATABASE.csv')
         return redirect(url_for('index'))
     return render_template("upload.html")
 
 
-def save(chore, description, picture):
+def save(chore, description, picture, csvFile):
     row = [str(chore), str(description), str(picture)]
-    with open('DATABASE.csv', 'a') as csv_file:
+    with open(csvFile, 'a') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(row)
-    return
+    return row
 
 
 @app.route("/delete", methods=['POST', 'GET'])
@@ -107,15 +107,15 @@ def checklist():
 
 @app.route("/choreview", methods=['POST', 'GET'])
 def choreview():
-    output = makeList()
+    output = makeList('DATABASE.csv')
     return render_template("choreview.html", chore=output)
 
 
 # This opens the DATABASE.csv file and records the data
-def makeList():
+def makeList(csvFile):
     dataList = ""
     # with open('Questions.csv', 'r') as csvfile:
-    with codecs.open('DATABASE.csv', "r", encoding='utf-8', errors='ignore') as csvfile:
+    with codecs.open( csvFile, "r", encoding='utf-8', errors='ignore') as csvfile:
         csvreader = csv.reader(csvfile)
         for row in csvreader:
             dataList += str(row) + '`'

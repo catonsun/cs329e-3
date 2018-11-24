@@ -1,5 +1,5 @@
 import unittest
-from app import verify, makeList, checklist
+from app import verify, makeList, checklist, save
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import csv
@@ -29,9 +29,11 @@ class MyTest(unittest.TestCase):
         self.assertEqual(makeList("testEmpty.csv"), "")
 
     def test4(self):
-        filledList = "['test', 'test', 'test']\n"
+        filledList = "['test', 'test', 'test']`"
         self.assertEqual(makeList("testFilled.csv"), filledList)
 
+    def test5(self):
+        self.assertEqual(save(1, 2, 3, 'testSave.csv'), ["1","2","3"])
 
 
 
