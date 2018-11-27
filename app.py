@@ -12,10 +12,12 @@ user = False
 
 @app.route("/")
 def index():
+    choreList = makeChoreList()
+    print(choreList)
     if not user:
-        return render_template("home.html")
+        return render_template("home.html", chores=choreList)
     else:
-        return render_template("home-user.html")
+        return render_template("home-user.html", chores=choreList)
 
 
 @app.route("/login", methods=['POST', 'GET'])
@@ -32,7 +34,7 @@ def login():
 def logout():
     global user
     user = False
-    return render_template("home.html")
+    return redirect(url_for("index"))
 
 
 def verify(username, password):
@@ -98,10 +100,16 @@ def delete():
 
 @app.route("/checklist", methods=['POST', 'GET'])
 def checklist():
-    choreList = []
     if request.method == 'POST':
-        checkChore = request.form["Chore"]
-        choreList.append(checkChore)
+        print(request.form["chore"])
+        print(request.form["description"])
+        chore = request.form["chore"]
+        description = request.form["description"]
+        row = [str(chore), str(description)]
+        with open("CHORES.csv", 'a') as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow(row)
+        return redirect(url_for('index'))
     return render_template("checklist.html")
 
 
@@ -115,7 +123,17 @@ def choreview():
 def makeList(csvFile):
     dataList = ""
     # with open('Questions.csv', 'r') as csvfile:
-    with codecs.open( csvFile, "r", encoding='utf-8', errors='ignore') as csvfile:
+    with codecs.open(csvFile, "r", encoding='utf-8', errors='ignore') as csvfile:
+        csvreader = csv.reader(csvfile)
+        for row in csvreader:
+            dataList += str(row) + '`'
+    csvfile.close()
+    return dataList
+
+
+def makeChoreList():
+    dataList = ""
+    with codecs.open("CHORES.csv", "r", encoding='utf-8', errors='ignore') as csvfile:
         csvreader = csv.reader(csvfile)
         for row in csvreader:
             dataList += str(row) + '`'

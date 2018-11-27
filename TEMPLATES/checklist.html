@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<script>
+<!--<script>
     if (localStorage.getItem("chores") === null) {
         console.log("first time");
         var chores = ["hello"];
@@ -41,19 +41,22 @@
 
         }
     }
-</script>
+</script>-->
 <center>
 <h1>Chore Checklist</h1>
-<!--<form action="/checklist" method="post" enctype="multipart/form-data">
-    Add to Chore Checklist:
-    <input type="text" name="Chore" required>
-    <br>
+<form action="/checklist" method="post" enctype="multipart/form-data">
+    <p>Chore to be completed:</p>
+    <input type="text" name="chore" required>
+    <p>Description of chore:</p>
+    <textarea rows="4" cols="50" name="description"></textarea>
+    <p></p>
     <input type="submit" value="Submit">
-</form>-->
-&nbsp;<input type="text" name="chore" id="chore" required>
-<button onclick="addToList()">Click to add chore to list</button>
+    <br> <br>
+</form>
+&nbsp;<!--<input type="text" name="chore" id="chore" required>
+<button >Click to add chore to list</button>
 </center>
-<ul id="cl">
+<ul id="cl">-->
 
 
 
