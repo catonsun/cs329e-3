@@ -60,8 +60,10 @@ def upload():
         description = request.form["description"]
         save(chore, description, filename, 'DATABASE.csv')
         return redirect(url_for('index'))
-    return render_template("upload.html")
-
+    if not user:
+        return render_template("upload.html")
+    else:
+        return render_template("upload-user.html")
 
 def save(chore, description, picture, csvFile):
     row = [str(chore), str(description), str(picture)]
@@ -139,8 +141,10 @@ def checklist():
 @app.route("/choreview", methods=['POST', 'GET'])
 def choreview():
     output = makeList('DATABASE.csv')
-    return render_template("choreview.html", chore=output)
-
+    if not user:
+        return render_template("choreview.html", chore=output)
+    else:
+        return render_template("choreview-user.html", chore=output)
 
 # This opens the DATABASE.csv file and records the data
 def makeList(csvFile):

@@ -1,23 +1,14 @@
-{% extends 'layout.html' %}
+{% extends 'layout-user.html' %}
 
 {% block body %}
 
     <center>
-    <h1>Welcome! You are a power user.</h1>
-    <a href="/choreview">Click here to view Completed Chores!</a>
-    <br>
-    <a href="/checklist">Click here to Add to Checklist</a>
-    <br>
-    <a href="/delete">Click here to Delete</a>
-    <br>
-    <a href="/deletechorelist">Click here to Delete a Chore from the Checklist </a>
-    <br>
-    <a &nbsp; href="/upload">Click here to upload</a>
-    <br>
-    <br>
-    <a href="/logout">Click here to Log Out</a>
-    <div>
-        <h1>Todo list:</h1>
+    <h1>Welcome! You are a parent user.</h1>
+    <div class = "jumbotron">
+        <text>Please use this website to create and track chores for your kids!</text> <br>
+        <text> Now that you have logged in you can add chores to the checklist!
+        </text> </div>
+        <h1>Todo list for kids:</h1>
         <p id="chore" hidden>{{chores}}</p>
         <table class="table" id="area">
             <tr>
