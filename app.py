@@ -65,6 +65,7 @@ def upload():
     else:
         return render_template("upload-user.html")
 
+
 def save(chore, description, picture, csvFile):
     row = [str(chore), str(description), str(picture)]
     with open(csvFile, 'a') as csv_file:
