@@ -146,6 +146,9 @@ def makeChoreList():
 #     output=makeList()
 #     return render_template("listview.html", name = output)
 
+@app.route("/noAccess", methods=['POST', 'GET'])
+def noAccess():
+    return render_template("noAccess.html")
 
 if __name__ == '__main__':
     app.run()
