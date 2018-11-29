@@ -1,11 +1,25 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<style>
+    #selector {
+        width: 200px;
+    }
+</style>
+
 <center>
 <h1>Upload a picture of your chore!</h1>
 <form action="/upload" method="post" enctype="multipart/form-data">
-    <p>Add a name for your chore!</p>
-    <input type="text" name="chore" required> <br>
+    <p id="chore" hidden>{{chore}}</p>
+    <p>Select a chore!</p>
+    <div class="form-group" id="selector">
+        <select class="custom-select" id="area" name="name" required>
+          <option selected="" disabled="disabled">Select a chore</option>
+          <!--<option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>-->
+        </select>
+    </div>
     <br> <p>Add a description for your chore!</p>
     <textarea rows="4" cols="50" name="description"></textarea>
     <p></p>
@@ -15,4 +29,55 @@
 </form>
 
 </center>
+
+<script>
+    var x = document.getElementById("chore").innerHTML;
+    console.log(x);
+    var y = x.split('`');
+    var chores = [];
+    for(var i = 0; i < y.length; i++) {
+        if(y[i] != "[]" && y[i] != "") {
+            chores.push(y[i].substring(1, y[i].length - 1));
+        }
+    }
+    for(var i = 0; i < chores.length; i++) {
+        chores[i] = chores[i].split(", ");
+        for(var j = 0; j < chores[i].length; j++) {
+            chores[i][j] = chores[i][j].substring(1, chores[i][j].length - 1);
+        }
+    }
+
+    console.log(chores);
+
+    for(var i = 0; i < chores.length; i++) {
+        var option = document.createElement("OPTION");
+        var textnode = document.createTextNode(chores[i][0]);
+        option.setAttribute("value", chores[i][0]);
+        option.appendChild(textnode);
+        document.getElementById("area").appendChild(option);
+
+        /*var tr = document.createElement("TR");
+        var td1 = document.createElement("TH");
+        td1.setAttribute("scope", "row");
+        var td2 = document.createElement("TD");
+        var td3 = document.createElement("TD");
+        var c = document.createTextNode(chores[i][0]);
+        var d = document.createTextNode(chores[i][1]);
+        var p = document.createElement("IMG");
+        p.setAttribute("src", "static/" + chores[i][2]);
+        p.setAttribute("width", "500");
+        p.setAttribute("height", "300");
+
+        td1.appendChild(c);
+        td2.appendChild(d);
+        td3.appendChild(p);
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+
+        document.getElementById("area").appendChild(tr);*/
+    }
+
+</script>
 {% endblock %}

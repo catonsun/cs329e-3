@@ -54,16 +54,18 @@ def upload():
         file = request.files['file']
         filename = file.filename
         file.save(os.path.join('static', filename))
-        print(request.form["chore"])
+        print(request.form.get('name'))
         print(request.form["description"])
-        chore = request.form["chore"]
+        chore = request.form.get('name')
         description = request.form["description"]
         save(chore, description, filename, 'DATABASE.csv')
         return redirect(url_for('index'))
     if not user:
-        return render_template("upload.html")
+        output = makeChoreList()
+        return render_template("upload.html", chore=output)
     else:
-        return render_template("upload-user.html")
+        output = makeChoreList()
+        return render_template("upload-user.html", chore=output)
 
 
 def save(chore, description, picture, csvFile):
@@ -177,6 +179,7 @@ def makeChoreList():
 @app.route("/noAccess", methods=['POST', 'GET'])
 def noAccess():
     return render_template("noAccess.html")
+
 
 if __name__ == '__main__':
     app.run()
