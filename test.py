@@ -1,5 +1,5 @@
 import unittest
-from app import verify, makeList, checklist, save
+from app import verify, makeList, checklist, save, deletechore
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import csv
@@ -34,6 +34,20 @@ class MyTest(unittest.TestCase):
 
     def test5(self):
         self.assertEqual(save(1, 2, 3, 'testSave.csv'), ["1","2","3"])
+
+    def test6(self):
+        with open("testDelete.csv", 'w') as output:
+            writer = csv.writer(output)
+            writer.writerow(["test","test"])
+        self.assertEqual(deletechore("test", "testDelete.csv"), [])
+
+    def test7(self):
+        with open("testDelete.csv", 'w') as output:
+            writer = csv.writer(output)
+            writer.writerow(["chore", "chore"])
+        self.assertEqual(deletechore("test", "testDelete.csv"), [['chore', 'chore']])
+        deletechore("chore", "testDelete.csv")
+
 
 
 

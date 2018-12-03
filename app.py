@@ -59,7 +59,7 @@ def upload():
         chore = request.form.get('name')
         description = request.form["description"]
         save(chore, description, filename, 'DATABASE.csv')
-        deletechore(chore)
+        deletechore(chore, 'CHORES.csv')
         return redirect(url_for('index'))
     if not user:
         output = makeChoreList()
@@ -83,15 +83,17 @@ def deletechorelist():
         chore = request.form["chore"]
         print(chore)
 
-        deletechore(chore)
+        deletechore(chore, 'CHORES.csv')
 
         return redirect(url_for('index'))
     return render_template("delete_from_chore_checklist.html")
 
 
-def deletechore(chore):
+def deletechore(chore, csvFile):
+    #'CHORES.csv'
+
     holder = []
-    with open('CHORES.csv', 'r') as inp:
+    with open(csvFile, 'r') as inp:
         for row in csv.reader(inp):
             if not row:
                 continue
@@ -99,10 +101,12 @@ def deletechore(chore):
                 print(row[0])
                 if row[0] != chore:
                     holder.append(row)
-    with open('CHORES.csv', 'w') as output:
+    with open(csvFile, 'w') as output:
         writer = csv.writer(output)
         for row in holder:
             writer.writerow(row)
+
+    return holder
 
 
 @app.route("/delete", methods=['POST', 'GET'])
