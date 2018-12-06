@@ -12,8 +12,12 @@
             <th scope="col">Chore</th>
             <th scope="col">Description</th>
             <th scope="col">Picture</th>
+            <th scope="col">Delete</th>
         </tr>
     </table>
+    <form action="/choreview" method="post" enctype="multipart/form-data">
+        <button type="submit" class="btn btn-primary">Delete</button>
+    </form>
     </center>
 
     <script>
@@ -37,26 +41,41 @@
 
         for(var i = 0; i < chores.length; i++) {
             var tr = document.createElement("TR");
-        var td1 = document.createElement("TH");
-        td1.setAttribute("scope", "row");
-        var td2 = document.createElement("TD");
-        var td3 = document.createElement("TD");
-        var c = document.createTextNode(chores[i][0]);
-        var d = document.createTextNode(chores[i][1]);
-        var p = document.createElement("IMG");
-        p.setAttribute("src", "static/" + chores[i][2]);
-        p.setAttribute("width", "500");
-        p.setAttribute("height", "300");
+            var td1 = document.createElement("TH");
+            td1.setAttribute("scope", "row");
+            var td2 = document.createElement("TD");
+            var td3 = document.createElement("TD");
+            var td4 = document.createElement("INPUT");
+            var c = document.createTextNode(chores[i][0]);
+            var d = document.createTextNode(chores[i][1]);
+            var p = document.createElement("IMG");
 
-        td1.appendChild(c);
-        td2.appendChild(d);
-        td3.appendChild(p);
+            td4.type = "checkbox";
+            td4.className = "control-input";
+            td4.setAttribute("checked", "");
 
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        tr.appendChild(td3);
+            var form = document.createElement('DIV');
+            form.class = 'form-group';
+            var checkbox = document.createElement('DIV');
+            checkbox.class = 'control checkbox';
 
-        document.getElementById("area").appendChild(tr);
+            checkbox.appendChild(td4);
+            form.appendChild(checkbox);
+
+            p.setAttribute("src", "static/" + chores[i][2]);
+            p.setAttribute("width", "500");
+            p.setAttribute("height", "300");
+
+            td1.appendChild(c);
+            td2.appendChild(d);
+            td3.appendChild(p);
+
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tr.appendChild(td3);
+            tr.appendChild(form);
+
+            document.getElementById("area").appendChild(tr);
         }
 
     </script>

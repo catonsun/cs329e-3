@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, Response
 import os
 import csv
 import codecs
+import json
 
 
 app = Flask(__name__)
@@ -153,6 +154,8 @@ def checklist():
 
 @app.route("/choreview", methods=['POST', 'GET'])
 def choreview():
+    if request.method == 'POST':
+        return redirect(url_for('index'))
     output = makeList('DATABASE.csv')
     if not user:
         return render_template("choreview.html", chore=output)
